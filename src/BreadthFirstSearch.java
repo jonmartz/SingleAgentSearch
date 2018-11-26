@@ -1,11 +1,11 @@
 import java.util.HashSet;
 import java.util.Iterator;
-import java.util.LinkedList;
+import java.util.LinkedHashMap;
 
 public class BreadthFirstSearch  extends ASearch
 {
-	private LinkedList<ASearchNode> open;
-	private LinkedList<ASearchNode> closed;
+	private LinkedHashMap<String, ASearchNode> open;
+	private HashSet<String> closed;
 	
 	@Override
 	public String getSolverName() 
@@ -25,8 +25,8 @@ public class BreadthFirstSearch  extends ASearch
 	@Override
 	public void initLists() 
 	{
-		open = new LinkedList<>();
-		closed = new LinkedList<>();
+		open = new LinkedHashMap<>();
+		closed = new HashSet<>();
 	}
 
 	@Override
@@ -35,8 +35,7 @@ public class BreadthFirstSearch  extends ASearch
 		ASearchNode node
 	) 
 	{
-        for (ASearchNode nextNode : open) if (nextNode.equals(node)) return nextNode;
-		return null;
+		return open.get(node._currentProblemState.toString());
 	}
 
 	@Override
@@ -45,8 +44,7 @@ public class BreadthFirstSearch  extends ASearch
 		ASearchNode node
 	) 
 	{
-        for (ASearchNode nextNode : open) if (nextNode.equals(node)) return true;
-		return false;
+        return open.containsKey(node._currentProblemState.toString());
 	}
 	
 	@Override
@@ -55,8 +53,7 @@ public class BreadthFirstSearch  extends ASearch
 		ASearchNode node
 	) 
 	{
-        for (ASearchNode nextNode : closed) if (nextNode.equals(node)) return true;
-        return false;
+        return closed.contains(node._currentProblemState.toString());
 	}
 
 	@Override
@@ -65,8 +62,7 @@ public class BreadthFirstSearch  extends ASearch
 		ASearchNode node
 	) 
 	{
-        open.removeIf(nextNode -> nextNode.equals(node));
-		open.add(node);
+        open.put(node._currentProblemState.toString(), node);
 	}
 
 	@Override
@@ -75,7 +71,7 @@ public class BreadthFirstSearch  extends ASearch
 		ASearchNode node
 	) 
 	{
-        closed.add(node);
+        closed.add(node._currentProblemState.toString());
 	}
 
 	@Override
@@ -87,8 +83,9 @@ public class BreadthFirstSearch  extends ASearch
 	@Override
 	public ASearchNode getBest() 
 	{
-		ASearchNode node = open.removeFirst();
-//		addToClosed(node);
+		Iterator<ASearchNode> iterator = open.values().iterator();
+		ASearchNode node = iterator.next();
+		iterator.remove();
 		return node;
 	}
 }

@@ -53,11 +53,15 @@ abstract public class ASearch
 			return null;
 		ASearchNode 		currentNode		= goal;
 		List<IProblemMove> 	solutionPath 	= new ArrayList<>();
+		//
 //		System.out.println();
 //		int i = 0;
+		//
 		while (currentNode._prev != null)
 		{
+			//
 //		    System.out.println(i++ + "\n" + currentNode);
+		    //
 			solutionPath.add(currentNode.getLastMove());
 			currentNode = currentNode._prev;
 		}

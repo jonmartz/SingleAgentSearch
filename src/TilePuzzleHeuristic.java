@@ -4,11 +4,10 @@ public class TilePuzzleHeuristic implements IHeuristic
 
 	@Override
 	public double getHeuristic
-	(
-		IProblemState problemState
-	) 
+			(
+					IProblemState problemState
+			)
 	{
 		return 0;
 	}
-	
 }
