@@ -27,7 +27,13 @@ abstract public class ASearch
 		
 		while (openSize() > 0)
 		{
+
+//			System.out.println("open:"+openSize());
+
 			current = getBest();
+
+//			System.out.println(current);
+
 			if (current.isGoal())
 				return current;
 			List<ASearchNode> neighbors = current.getNeighbors();

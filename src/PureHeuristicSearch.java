@@ -1,7 +1,25 @@
+import java.util.Comparator;
+import java.util.HashMap;
+import java.util.HashSet;
+import java.util.PriorityQueue;
 
 public class PureHeuristicSearch  extends ASearch
 {
-	// Define lists here ...
+	private PriorityQueue<ASearchNode> openPriorityQueue;
+	private HashMap<String, ASearchNode> openHashMap;
+	private HashSet<String> closed;
+
+	private class ASearchNodeComparator implements Comparator<ASearchNode>
+	{
+		@Override
+		public int compare(ASearchNode o1, ASearchNode o2) {
+			if (o1.getH() < o2.getH()) return -1;
+			if (o1.getH() > o2.getH()) return 1;
+			if (o1.getG() < o2.getG()) return -1;
+			if (o1.getG() > o2.getG()) return 1;
+			return 0;
+		}
+	}
 	
 	@Override
 	public String getSolverName() 
@@ -11,77 +29,84 @@ public class PureHeuristicSearch  extends ASearch
 
 	@Override
 	public ASearchNode createSearchRoot
-	(
-		IProblemState problemState
-	) 
+			(
+					IProblemState problemState
+			)
 	{
 		ASearchNode newNode = new HeuristicSearchNode(problemState);
 		return newNode;
 	}
-	
-	@Override
-	public void initLists() 
-	{
 
+	@Override
+	public void initLists()
+	{
+		openPriorityQueue = new PriorityQueue<>(new ASearchNodeComparator());
+		openHashMap = new HashMap<>();
+		closed = new HashSet<>();
 	}
 
 	@Override
 	public ASearchNode getOpen
-	(
-		ASearchNode node
-	) 
+			(
+					ASearchNode node
+			)
 	{
-		return null;
+		return openHashMap.get(node._currentProblemState.toString());
 	}
 
 	@Override
 	public boolean isOpen
-	(
-		ASearchNode node
-	) 
+			(
+					ASearchNode node
+			)
 	{
-		return false;
-	}
-	
-	@Override
-	public boolean isClosed
-	(
-		ASearchNode node
-	) 
-	{
-		return false;
+		return openHashMap.containsKey(node._currentProblemState.toString());
 	}
 
-	
+	@Override
+	public boolean isClosed
+			(
+					ASearchNode node
+			)
+	{
+		return closed.contains(node._currentProblemState.toString());
+	}
 
 	@Override
 	public void addToOpen
-	(
-		ASearchNode node
-	) 
+			(
+					ASearchNode node
+			)
 	{
-
+		String state = node._currentProblemState.toString();
+		ASearchNode nodeInOpen = openHashMap.get(state);
+		if (nodeInOpen != null)
+			openPriorityQueue.remove(nodeInOpen);
+		openPriorityQueue.add(node);
+		openHashMap.put(state, node);
 	}
 
 	@Override
 	public void addToClosed
-	(
-		ASearchNode node
-	) 
+			(
+					ASearchNode node
+			)
 	{
-
+		closed.add(node._currentProblemState.toString());
 	}
 
 	@Override
-	public int openSize() 
+	public int openSize()
 	{
-		return 0;
+		return openPriorityQueue.size();
 	}
 
 	@Override
-	public ASearchNode getBest() 
+	public ASearchNode getBest()
 	{
-		return null;
+		ASearchNode node = openPriorityQueue.remove();
+		openHashMap.remove(node._currentProblemState.toString());
+		return node;
 	}
 
 }

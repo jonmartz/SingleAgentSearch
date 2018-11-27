@@ -9,16 +9,17 @@ public class Main
 
 	public static void main(String [ ] args)
 	{
-		
+//		long start = System.currentTimeMillis();
 		System.out.println("Start!");
 //		task1();
-		task2();
-		task3();
-		//task4();
-		//task5();
-		//task6();
+//		task2();
+//		task3();
+//		task4();
+//		task5();
+		task6();
 		System.out.println("");
 		System.out.println("Done!");
+//		System.out.println("time: "+(System.currentTimeMillis() - start));
 	}
 	
 	public static void task1()

@@ -47,11 +47,6 @@ public class UniformCostSearch   extends ASearch
 	)
 	{
 		return openHashMap.get(node._currentProblemState.toString());
-//		String state = node._currentProblemState.toString();
-//		for (ASearchNode next : openPriorityQueue)
-//			if (next._currentProblemState.toString().equals(state))
-//				return next;
-//		return null;
 	}
 
 	@Override
@@ -61,11 +56,6 @@ public class UniformCostSearch   extends ASearch
 	)
 	{
 		return openHashMap.containsKey(node._currentProblemState.toString());
-//		String state = node._currentProblemState.toString();
-//		for (ASearchNode next : openPriorityQueue)
-//			if (next._currentProblemState.toString().equals(state))
-//				return true;
-//		return false;
 	}
 
 	@Override
@@ -89,16 +79,6 @@ public class UniformCostSearch   extends ASearch
 			openPriorityQueue.remove(nodeInOpen);
 		openPriorityQueue.add(node);
 		openHashMap.put(state, node);
-//		String state = node._currentProblemState.toString();
-//		Iterator<ASearchNode> iterator = openPriorityQueue.iterator();
-//		while (iterator.hasNext()){
-//			ASearchNode next = iterator.next();
-//			if (next._currentProblemState.toString().equals(state)) {
-//				iterator.remove();
-//				break;
-//			}
-//		}
-//		openPriorityQueue.add(node);
 	}
 
 	@Override
@@ -122,7 +102,6 @@ public class UniformCostSearch   extends ASearch
 		ASearchNode node = openPriorityQueue.remove();
 		openHashMap.remove(node._currentProblemState.toString());
 		return node;
-//		return openPriorityQueue.remove();
 	}
 
 }

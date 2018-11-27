@@ -52,4 +52,9 @@ public class HeuristicSearchNode extends BlindSearchNode
 		ASearchNode newNode = new HeuristicSearchNode(this, currentProblemState, g, _heuristic);
 		return newNode;
 	}
+
+	@Override
+	public String toString() {
+		return "g="+getG()+" h="+getH()+" f="+getF()+"\n"+_currentProblemState+"\n";
+	}
 }
