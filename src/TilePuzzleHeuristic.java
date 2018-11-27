@@ -50,10 +50,17 @@ public class TilePuzzleHeuristic implements IHeuristic
 		for (int col = 0; col < cols; col++){
 			for (int row = 0; row < rows-1; row++){
 				int upper = deltaRows[row][col];
-				int lower = deltaRows[row+1][col];
-				if (upper != nonConflicting && upper > lower){
-					h += 2*tiles[row+1][col];
-					deltaRows[row+1][col] = nonConflicting;
+				if (upper != nonConflicting) {
+					while (upper > 0) {
+						if (upper > deltaRows[row + 1][col]) {
+							h += 2 * tiles[row + 1][col];
+							deltaRows[row + 1][col] = nonConflicting;
+							break;
+						}
+						if (upper - 1 == 0) break;
+						upper--;
+						row++;
+					}
 				}
 			}
 		}
@@ -61,10 +68,17 @@ public class TilePuzzleHeuristic implements IHeuristic
 		for (int row = 0; row < rows; row++){
 			for (int col = 0; col < cols-1; col++){
 				int left = deltaCols[row][col];
-				int right = deltaCols[row][col+1];
-				if (left != nonConflicting && left > right){
-					h += 2*tiles[row][col+1];
-					deltaCols[row][col+1] = nonConflicting;
+				if (left != nonConflicting) {
+					while (left > 0) {
+						if (left > deltaCols[row][col + 1]) {
+							h += 2 * tiles[row][col + 1];
+							deltaCols[row][col + 1] = nonConflicting;
+							break;
+						}
+						if (left - 1 == 0) break;
+						left--;
+						col++;
+					}
 				}
 			}
 		}
